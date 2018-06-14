@@ -89,6 +89,11 @@ public class Ride {
         save(context);
     }
 
+    public void add(Context context, double meters) {
+        distance += (float)meters;
+        save(context);
+    }
+
     public void save(Context context) {
         SharedPreferences.Editor editor = ((Activity)context).getPreferences(Context.MODE_PRIVATE).edit();
         editor.putBoolean("ride", true);

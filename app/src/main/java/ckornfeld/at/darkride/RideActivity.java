@@ -35,10 +35,11 @@ public class RideActivity extends AppCompatActivity implements View.OnClickListe
     TextView textSpeed, textDistance, textDuration, textTime;
 
     Ride ride = null;
+    Location lastLocation = null;
 
     private LocationRequest mLocationRequest;
-    private long UPDATE_INTERVAL = 10 * 1000;  /* 10 secs */
-    private long FASTEST_INTERVAL = 2000; /* 2 sec */
+    private long UPDATE_INTERVAL = 1000;  /* 1 secs */
+    private long FASTEST_INTERVAL = 1000; /* 1 sec */
     private long UI_REFRESH_INTERVALL_SEC = 10;
 
     @Override
@@ -122,6 +123,7 @@ public class RideActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if(view == fabStop) {
             ride.stop(this);
+            lastLocation = null;
             loadUi();
         }
         else if(view == fabClose) {
@@ -130,6 +132,7 @@ public class RideActivity extends AppCompatActivity implements View.OnClickListe
         else if(view == fabReset) {
             Ride.reset(this);
             ride = new Ride();
+            lastLocation = null;
             loadUi();
         }
     }
@@ -172,6 +175,7 @@ public class RideActivity extends AppCompatActivity implements View.OnClickListe
         }
         catch(SecurityException se) {
             //todo handle me
+            int x = 1;
         }
     }
 
@@ -183,6 +187,9 @@ public class RideActivity extends AppCompatActivity implements View.OnClickListe
 
         // You can now create a LatLng Object for use with maps
         //LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+
+        if(ride.isStarted() && lastLocation != null)
+            ride.add(this, location.distanceTo(lastLocation));
         textSpeed.setText(String.valueOf(location.getSpeed()));
     }
 
