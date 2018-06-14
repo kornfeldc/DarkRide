@@ -42,6 +42,9 @@ public class RideActivity extends AppCompatActivity implements View.OnClickListe
     private long FASTEST_INTERVAL = 1000; /* 1 sec */
     private long UI_REFRESH_INTERVALL_SEC = 10;
 
+    final Handler handler = new Handler();
+    Runnable runnable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,14 +70,16 @@ public class RideActivity extends AppCompatActivity implements View.OnClickListe
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
         int t = 0;
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+
+        runnable = new Runnable() {
             @Override
             public void run() {
                 loadUi();
                 handler.postDelayed(this, UI_REFRESH_INTERVALL_SEC*1000);
             }
-        }, UI_REFRESH_INTERVALL_SEC*1000);
+        };
+
+        handler.postDelayed(runnable, UI_REFRESH_INTERVALL_SEC*1000);
     }
 
     @Override
@@ -93,6 +98,16 @@ public class RideActivity extends AppCompatActivity implements View.OnClickListe
         textDistance.setText(ride.getFormattedDistance());
         textTime.setText(DF.CalendarToString("HH:mm"));
         setWakeLock(ride.isStarted());
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    public void close() {
+        ride.save(this);
+        finish();
     }
 
     @Override
@@ -129,7 +144,7 @@ public class RideActivity extends AppCompatActivity implements View.OnClickListe
             loadUi();
         }
         else if(view == fabClose) {
-            finish();
+            close();
         }
         else if(view == fabReset) {
             Ride.reset(this);
