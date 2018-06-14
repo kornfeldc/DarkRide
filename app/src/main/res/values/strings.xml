@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">DarkRide</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="kmh">km/h</string>
+    <string name="km">km</string>
+    <string name="duration">Dauer</string>
+    <string name="time">Uhrzeit</string>
+</resources>
