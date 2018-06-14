@@ -2,7 +2,7 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="fab_size">60dp</dimen>
 
-    <dimen name="text_biggest">100dp</dimen>
-    <dimen name="text_big">50dp</dimen>
+    <dimen name="text_biggest">120dp</dimen>
+    <dimen name="text_big">60dp</dimen>
     <dimen name="text_label">10dp</dimen>
 </resources>

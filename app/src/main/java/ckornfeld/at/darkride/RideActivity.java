@@ -62,9 +62,10 @@ public class RideActivity extends AppCompatActivity implements View.OnClickListe
         textTime = findViewById(R.id.textTime);
         textDuration = findViewById(R.id.textDuration);
 
-        startLocationUpdates();
-
         textTime.setText(DF.CalendarToString("HH:mm"));
+
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
         int t = 0;
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -80,6 +81,7 @@ public class RideActivity extends AppCompatActivity implements View.OnClickListe
     protected void onResume() {
         super.onResume();
         loadUi();
+        startLocationUpdates();
     }
 
     private void loadUi() {
@@ -149,8 +151,10 @@ public class RideActivity extends AppCompatActivity implements View.OnClickListe
         // Create the location request to start receiving updates
         mLocationRequest = new LocationRequest();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(UPDATE_INTERVAL);
-        mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
+        mLocationRequest.setInterval(0);
+        mLocationRequest.setFastestInterval(0);
+        mLocationRequest.setMaxWaitTime(0);
+        mLocationRequest.setSmallestDisplacement(0);
 
         // Create LocationSettingsRequest object using location request
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
@@ -190,7 +194,7 @@ public class RideActivity extends AppCompatActivity implements View.OnClickListe
 
         if(ride.isStarted() && lastLocation != null)
             ride.add(this, location.distanceTo(lastLocation));
-        textSpeed.setText(String.valueOf(location.getSpeed()));
+        textSpeed.setText(String.valueOf(Math.round(location.getSpeed())));
     }
 
 }

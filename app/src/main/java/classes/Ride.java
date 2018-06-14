@@ -7,6 +7,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Vector;
 
@@ -72,7 +73,7 @@ public class Ride {
         if(isEmpty())
             return "--";
         else
-            return String.valueOf(getDistance());
+            return new DecimalFormat("###0.0").format(getDistance()).replace(".",",");
     }
 
     public void start(Context context) {

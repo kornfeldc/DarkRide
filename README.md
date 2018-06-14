@@ -9,6 +9,10 @@ The most simpliest bike computer for amoled devices.
 
 ## Changelog
 
+### 1.0.1 (14.06.2018)
+#### Changed
+* Changed: Modified number formats
+* Fixed: endless loop because of requestPermissions in onResume
+
 ### 1.0.0 (14.06.2018)
-#### Added
-- Initial
+* Initial
