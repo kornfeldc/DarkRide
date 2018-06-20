@@ -208,8 +208,8 @@ public class RideActivity extends AppCompatActivity implements View.OnClickListe
         //LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
         if(ride.isStarted() && lastLocation != null)
-            ride.add(this, location.distanceTo(lastLocation));
-        textSpeed.setText(String.valueOf(Math.round(location.getSpeed())));
+            ride.addMeters(this, location.distanceTo(lastLocation));
+        textSpeed.setText(String.valueOf(Math.round(location.getSpeed()*3.6 /*m/s to km/h*/)));
     }
 
 }

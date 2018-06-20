@@ -15,7 +15,7 @@ public class Ride {
 
     Calendar lastStarted = null;
     float duration;
-    float distance;
+    float distanceMeter;
     boolean started = false;
     boolean empty = true;
 
@@ -27,12 +27,12 @@ public class Ride {
         this.duration = duration;
     }
 
-    public float getDistance() {
-        return distance;
+    public float getDistanceMeter() {
+        return distanceMeter;
     }
 
-    public void setDistance(float distance) {
-        this.distance = distance;
+    public void setDistanceMeter(float distanceMeter) {
+        this.distanceMeter = distanceMeter;
     }
 
     public boolean isStarted() {
@@ -73,7 +73,7 @@ public class Ride {
         if(isEmpty())
             return "--";
         else
-            return new DecimalFormat("###0.0").format(getDistance()).replace(".",",");
+            return new DecimalFormat("###0.00").format(getDistanceMeter()/1000).replace(".",",");
     }
 
     public void start(Context context) {
@@ -90,8 +90,8 @@ public class Ride {
         save(context);
     }
 
-    public void add(Context context, double meters) {
-        distance += (float)meters;
+    public void addMeters(Context context, double meters) {
+        distanceMeter += (float)meters;
         save(context);
     }
 
@@ -100,7 +100,7 @@ public class Ride {
         editor.putBoolean("ride", true);
         editor.putBoolean("started", isStarted());
         editor.putBoolean("empty", isEmpty());
-        editor.putFloat("distance", getDistance());
+        editor.putFloat("distanceMeter", getDistanceMeter());
         editor.putFloat("duration", getDuration());
         if(lastStarted != null)
             editor.putLong("lastStarted", DF.ToLong(lastStarted));
@@ -115,7 +115,7 @@ public class Ride {
         if(pref.getBoolean("ride", false)) {
             ride.setEmpty(pref.getBoolean("empty", true));
             ride.setStarted(pref.getBoolean("started", false));
-            ride.setDistance(pref.getFloat("distance", 0));
+            ride.setDistanceMeter(pref.getFloat("distanceMeter", 0));
             ride.setDuration(pref.getFloat("duration", 0));
 
             long ls = pref.getLong("lastStarted", 0);
