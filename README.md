@@ -9,6 +9,9 @@ The most simpliest bike computer for amoled devices.
 
 ## Changelog
 
+### 1.0.3 (05.07.2018)
+* Fixed: distance meter calculation always 0
+
 ### 1.0.2 (20.06.2018)
 * Fixed: speed displayed m/s instead of km/h
 * Fixed: distance meter to km

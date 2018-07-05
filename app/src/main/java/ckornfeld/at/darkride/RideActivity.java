@@ -199,17 +199,10 @@ public class RideActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void onLocationChanged(Location location) {
-        // New location has now been determined
-        /*String msg = "Updated Location: " +
-                Double.toString(location.getLatitude()) + "," +
-                Double.toString(location.getLongitude());*/
-
-        // You can now create a LatLng Object for use with maps
-        //LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-
         if(ride.isStarted() && lastLocation != null)
             ride.addMeters(this, location.distanceTo(lastLocation));
         textSpeed.setText(String.valueOf(Math.round(location.getSpeed()*3.6 /*m/s to km/h*/)));
+        lastLocation = location;
     }
 
 }
